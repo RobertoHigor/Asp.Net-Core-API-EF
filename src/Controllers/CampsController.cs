@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System;
 using CoreCodeCamp.Models;
 using AutoMapper;
+using System.Linq;
 
 namespace CoreCodeCamp.Controllers
 {
@@ -53,6 +54,25 @@ namespace CoreCodeCamp.Controllers
                 if (result == null) return NotFound();
 
                 return _mapper.Map<CampModel>(result);
+            }
+            catch (Exception)
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError, "Database failure");
+            }
+        }
+
+        // Por utilizar Query Strings, não está sendo passado a data pela rota, e sim como parâmetro
+        // Sendo assim, a rota não precias ser "search/{theDate}"
+        [HttpGet("search/")]
+        public async Task<ActionResult<CampModel[]>> SearchByDate(DateTime theDate, bool includeTalks = false)
+        {
+            try
+            {
+                var results = await _repository.GetAllCampsByEventDate(theDate, includeTalks);
+
+                if (!results.Any()) return NotFound();
+
+                return _mapper.Map<CampModel[]>(results);
             }
             catch (Exception)
             {
