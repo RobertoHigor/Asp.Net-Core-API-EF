@@ -99,7 +99,7 @@ namespace CoreCodeCamp.Controllers
                     // uri para pegar o novo objeto
                     // Mapear do jeito $"/api/camps/{camp.Moniker}" funciona, porém a string está hardcoded
                     // Para isso existe a biblioteca do Asp.NET Core LinkGenerator
-                    return Created($"/api/camps{camp.Moniker}", _mapper.Map<CampModel>(camp));
+                    return Created(location, _mapper.Map<CampModel>(camp));
                 }
             }
             catch (Exception)
