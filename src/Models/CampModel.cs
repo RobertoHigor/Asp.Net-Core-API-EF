@@ -22,21 +22,21 @@ namespace CoreCodeCamp.Models
         public int Length { get; set; } = 1;
 
         // Location
-        public LocationModel Location { get; set; }
+        //public LocationModel Location { get; set; }
         /*
          * Ao se utilizar o nome da entidade como prefixo,
          * o AutoMapper irá realizar um bind automático,
          * não sendo necessário criar uma LocationModel caso não queiramos retornar
          * todos os dados de Location associados a um camp
          */
-        //public string Venue { get; set; }
-        //public string LocationAddress1 { get; set; }
-        //public string LocationAddress2 { get; set; }
-        //public string LocationAddress3 { get; set; }
-        //public string LocationCityTown { get; set; }
-        //public string LocationStateProvince { get; set; }
-        //public string LocationPostalCode { get; set; }
-        //public string LocationCountry { get; set; }
+        public string Venue { get; set; }
+        public string LocationAddress1 { get; set; }
+        public string LocationAddress2 { get; set; }
+        public string LocationAddress3 { get; set; }
+        public string LocationCityTown { get; set; }
+        public string LocationStateProvince { get; set; }
+        public string LocationPostalCode { get; set; }
+        public string LocationCountry { get; set; }
 
         //Talk
         public ICollection<TalkModel> Talks { get; set; }
