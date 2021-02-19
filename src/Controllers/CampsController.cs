@@ -99,7 +99,7 @@ namespace CoreCodeCamp.Controllers
                     // uri para pegar o novo objeto
                     // Mapear do jeito $"/api/camps/{camp.Moniker}" funciona, porém a string está hardcoded
                     // Para isso existe a biblioteca do Asp.NET Core LinkGenerator
-                    return Created("", _mapper.Map<CampModel>(camp));
+                    return Created($"/api/camps{camp.Moniker}", _mapper.Map<CampModel>(camp));
                 }
 
             }
@@ -129,6 +129,57 @@ namespace CoreCodeCamp.Controllers
             {
                 return this.StatusCode(StatusCodes.Status500InternalServerError, "Database failure");
             }     
+        }
+
+        [HttpPut("{moniker}")]
+        public async Task<ActionResult<CampModel>> Put(string moniker, CampModel model)
+        {
+            try
+            {
+                var oldCamp = await _repository.GetCampAsync(moniker);
+                if (oldCamp == null) NotFound($"Could not find camp with moniker of {moniker}");
+
+                // Usando mapper para aplicar os valores de um objeto para o outro
+                // Assim não é necessário fazer manualmente oldcamp.Name = model.Name para todas as propriedades
+                // source -> target
+                _mapper.Map(model, oldCamp);
+
+                if (await _repository.SaveChangesAsync())
+                {
+                    return _mapper.Map<CampModel>(oldCamp);
+                }
+                
+            }
+            catch (Exception)
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError, "Database failure");
+            }
+
+            // FallThrough
+            return BadRequest();
+        }
+
+        [HttpDelete("{moniker}")]
+        public async Task<IActionResult> Delete(string moniker)
+        {
+            try
+            {
+                var oldCamp = await _repository.GetCampAsync(moniker);
+                if (oldCamp == null) return NotFound();
+
+                _repository.Delete(oldCamp);
+
+                if (await _repository.SaveChangesAsync())
+                {
+                    return Ok();
+                }
+            }
+            catch (Exception)
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError, "Database failure");
+            }
+
+            return BadRequest("Failed to delete camp");
         }
     }
 }
