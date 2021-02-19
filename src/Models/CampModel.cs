@@ -26,7 +26,7 @@ namespace CoreCodeCamp.Models
          * não sendo necessário criar uma LocationModel caso não queiramos retornar
          * todos os dados de Location associados a um camp
          */
-        public string LocationVenueName { get; set; }
+        public string Venue { get; set; }
         public string LocationAddress1 { get; set; }
         public string LocationAddress2 { get; set; }
         public string LocationAddress3 { get; set; }
