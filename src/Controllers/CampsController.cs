@@ -101,7 +101,17 @@ namespace CoreCodeCamp.Controllers
                     // Para isso existe a biblioteca do Asp.NET Core LinkGenerator
                     return Created("", _mapper.Map<CampModel>(camp));
                 }
-                
+
+            }
+            catch (Exception)
+            {
+                return this.StatusCode(StatusCodes.Status500InternalServerError, "Database failure");
+            }
+
+            return BadRequest();
+        }
+
+
         // Por utilizar Query Strings, não está sendo passado a data pela rota, e sim como parâmetro
         // Sendo assim, a rota não precias ser "search/{theDate}"
         [HttpGet("search/")]
@@ -118,8 +128,7 @@ namespace CoreCodeCamp.Controllers
             catch (Exception)
             {
                 return this.StatusCode(StatusCodes.Status500InternalServerError, "Database failure");
-            }
-            return BadRequest();
-        }         
+            }     
+        }
     }
 }
