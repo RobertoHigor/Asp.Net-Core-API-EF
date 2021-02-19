@@ -1,12 +1,12 @@
-﻿using CoreCodeCamp.Data;
+﻿using AutoMapper;
+using CoreCodeCamp.Data;
+using CoreCodeCamp.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-using System;
-using CoreCodeCamp.Models;
-using AutoMapper;
 using Microsoft.AspNetCore.Routing;
+using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace CoreCodeCamp.Controllers
 {
@@ -26,7 +26,7 @@ namespace CoreCodeCamp.Controllers
         }
 
         // Ao utilizar ActionResult<Tipo>, é dado como Ok
-        // Caso o retorno seja desse tipo. 
+        // Caso o retorno seja desse tipo.
         // É possível utilizar IActionResult caso não queira explicitar
         [HttpGet]
         public async Task<ActionResult<CampModel[]>> Get(bool includeTalks = false)
@@ -37,7 +37,7 @@ namespace CoreCodeCamp.Controllers
                 // Caso contrário, será retornado o OK mesmo sem atribuir o results.
                 var results = await _repository.GetAllCampsAsync(includeTalks);
 
-                // Suporta outros tipos de collections como IEnumerable etc   
+                // Suporta outros tipos de collections como IEnumerable etc
                 return _mapper.Map<CampModel[]>(results);
             }
             catch (Exception)
@@ -63,7 +63,6 @@ namespace CoreCodeCamp.Controllers
                 return this.StatusCode(StatusCodes.Status500InternalServerError, "Database failure");
             }
         }
-
 
         public async Task<ActionResult<CampModel>> Post(CampModel model)
         {
@@ -92,8 +91,9 @@ namespace CoreCodeCamp.Controllers
                     return BadRequest("Could not use current moniker");
                 }
 
-                var camp = _mapper.Map<Camp>(model);
+                Camp camp = _mapper.Map<Camp>(model);
                 _repository.Add(camp);
+
                 if (await _repository.SaveChangesAsync())
                 {
                     // uri para pegar o novo objeto
@@ -101,7 +101,6 @@ namespace CoreCodeCamp.Controllers
                     // Para isso existe a biblioteca do Asp.NET Core LinkGenerator
                     return Created($"/api/camps{camp.Moniker}", _mapper.Map<CampModel>(camp));
                 }
-
             }
             catch (Exception)
             {
@@ -110,7 +109,6 @@ namespace CoreCodeCamp.Controllers
 
             return BadRequest();
         }
-
 
         // Por utilizar Query Strings, não está sendo passado a data pela rota, e sim como parâmetro
         // Sendo assim, a rota não precias ser "search/{theDate}"
@@ -128,7 +126,7 @@ namespace CoreCodeCamp.Controllers
             catch (Exception)
             {
                 return this.StatusCode(StatusCodes.Status500InternalServerError, "Database failure");
-            }     
+            }
         }
 
         [HttpPut("{moniker}")]
@@ -148,7 +146,6 @@ namespace CoreCodeCamp.Controllers
                 {
                     return _mapper.Map<CampModel>(oldCamp);
                 }
-                
             }
             catch (Exception)
             {
