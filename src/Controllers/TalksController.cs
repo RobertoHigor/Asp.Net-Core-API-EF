@@ -95,6 +95,45 @@ namespace CoreCodeCamp.Controllers
 
             return BadRequest();
         }
+
+        [HttpPut("{id:int}")]
+        public async Task<ActionResult<TalkModel>> Put(string moniker, int Id, TalkModel model)
+        {
+            try
+            {
+                var talk = await _repository.GetTalkByMonikerAsync(moniker, Id, true);
+                if (talk == null) return NotFound("Couldn't find the talk");
+
+                
+                // Sem alterar o profile, esse Map irá deixar o speakr e camp como null. 
+                // Nesse caso, no profile está configurado para ignorar o speaker durante o mapping
+                _mapper.Map(model, talk);
+
+                // Speaker atribuido manualmente
+                if (model.Speaker != null)
+                {
+                    var speaker = await _repository.GetSpeakerAsync(model.Speaker.SpeakerId);
+                    if (speaker != null)
+                    {
+                        talk.Speaker = speaker;
+                    }
+                }
+
+
+                if (await _repository.SaveChangesAsync())
+                {
+                    return _mapper.Map<TalkModel>(talk);
+                }
+                else
+                {
+                    return BadRequest("Faile to update database");
+                }
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Failed to create Task");
+            }
+        }
                
     }
 }
