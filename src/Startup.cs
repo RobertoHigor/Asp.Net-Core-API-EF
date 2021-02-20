@@ -29,8 +29,10 @@ namespace CoreCodeCamp
                 opt.DefaultApiVersion = new ApiVersion(1, 1);
                 // retorna as versões disponíveis da URI no header
                 opt.ReportApiVersions = true;
-                opt.ApiVersionReader = new HeaderApiVersionReader("X-Version");
-            });
+                opt.ApiVersionReader = ApiVersionReader.Combine(
+                    new HeaderApiVersionReader("X-Version"),
+                    new QueryStringApiVersionReader("ver", "version"));
+                });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
