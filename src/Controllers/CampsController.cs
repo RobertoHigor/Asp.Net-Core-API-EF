@@ -9,7 +9,10 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace CoreCodeCamp.Controllers
-{
+{   
+    // Maneira de injetar a versão diretamente na URL.
+    // Apenas de exemplo, por ser uma maneira ruim.
+    //[Route("api/v{version:apiVersion}/[controller]")]
     [Route("api/[controller]")]
     [ApiVersion("1.0")]
     [ApiVersion("1.1")]
