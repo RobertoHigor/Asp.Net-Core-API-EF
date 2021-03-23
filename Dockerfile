@@ -1,6 +1,8 @@
 FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
 WORKDIR /app    
 ENV ASPNETCORE_URLS=http://+:8080
+# Variavel de ambiente dizendo que é Development
+ENV ASPNETCORE_ENVIRONMENT=Development 
 EXPOSE 8080
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
