@@ -8,11 +8,11 @@ WORKDIR /src
 COPY ["src/CoreCodeCamp.csproj", "src/"]
 RUN dotnet restore "src/CoreCodeCamp.csproj"
 COPY . .
-WORKDIR "/src/src"
-RUN dotnet build "CoreCodeCamp.csproj" -c Release -o /app/build
+WORKDIR "/src"
+RUN dotnet build "src/CoreCodeCamp.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "CoreCodeCamp.csproj" -c Release -o /app/publish
+RUN dotnet publish "src/CoreCodeCamp.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
