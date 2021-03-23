@@ -44,7 +44,4 @@ jobs:
         push: true
         tags: user/app:latest
     - name: Image digest
-      run: echo $ {{ steps.docker_build.outputs.digest }}
-        
-        repository: robertohigor/aspnetCoreCrud
-        tag_with_ref: true
+      run: echo $ {{ steps.docker_build.outputs.digest }}/aspnetCoreCrud
