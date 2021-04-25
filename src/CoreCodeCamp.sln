@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.28107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreCodeCamp", "CoreCodeCamp.csproj", "{A5EBC609-68B7-47B5-AA9C-F9B50DC1CD34}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{9260C7A9-B747-4C8D-A192-294F82C279EC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Controllers.Test", "Tests\Controllers.Test\Controllers.Test.csproj", "{68123995-C50D-42FE-86B6-55C798816578}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,11 +19,18 @@ Global
 		{A5EBC609-68B7-47B5-AA9C-F9B50DC1CD34}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5EBC609-68B7-47B5-AA9C-F9B50DC1CD34}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A5EBC609-68B7-47B5-AA9C-F9B50DC1CD34}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68123995-C50D-42FE-86B6-55C798816578}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68123995-C50D-42FE-86B6-55C798816578}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68123995-C50D-42FE-86B6-55C798816578}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68123995-C50D-42FE-86B6-55C798816578}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0AA65990-D92D-40F4-9DCC-F52591B1B43B}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{68123995-C50D-42FE-86B6-55C798816578} = {9260C7A9-B747-4C8D-A192-294F82C279EC}
 	EndGlobalSection
 EndGlobal
